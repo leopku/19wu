@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   after_filter :store_location # http://git.io/-lVTIA
 
+  rescue_from CanCan::AccessDenied, :with => lambda{ render_error_page 500}
+
   def user_path(user_or_login)
     if user_or_login.is_a?(User)
       login = user_or_login.login.to_s
@@ -30,4 +32,7 @@ class ApplicationController < ActionController::Base
     session[:previous_url] || root_path
   end
 
+  def render_error_page(error_code)
+    render :file => "#{Rails.root}/public/#{error_code}.html", :status => error_code
+  end
 end
