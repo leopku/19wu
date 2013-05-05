@@ -17,10 +17,13 @@
   $scope.init = (data) ->
     [$scope.count, $scope.labels, $scope.titles, $scope.joined] = data
     $scope.disabled = !$scope.user? || $scope.event.expired
-    console.log($scope.event.expired);
     if $scope.disabled
       $scope.title = "您需要登录后才能关注活动"
       $scope.href = "/users/sign_in?return_to=#{$location.absUrl()}"
+    if $scope.event.expired
+      $scope.joined = 'expired'
+      $scope.title = "已过期，请继续关注下一期活动"
+      $scope.href= null
   $scope.join = ->
     return if $scope.disabled
     action = if $scope.joined then 'quit' else 'join'

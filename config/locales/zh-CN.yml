@@ -106,6 +106,7 @@ zh-CN:
       state:
         false: "我要参加"
         true: "已报名"
+        expired: "已结束"
       title:
         false: "赶快报名吧"
         true: "记得准时来参加哦"
