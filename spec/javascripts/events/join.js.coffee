@@ -32,10 +32,18 @@ describe "event", ->
         expect(scope.joined).toBe(false)
 
   describe 'guest', ->
-    describe "follow", ->
+    describe "join", ->
       beforeEach -> scope.init([1, {true: '已报名', false: '我要参加'}, {true: '记得准时来参加哦', false: '赶快报名吧'}, false])
       it "should be disabled", ->
         expect(scope.disabled).toBe(true)
         expect(scope.title).toBe('您需要登录后才能关注活动')
         expect(scope.href).toMatch(/\/users\/sign_in/)
 
+  describe 'expired', ->
+    beforeEach -> 
+      scope.event.expired = true
+      scope.init([1, {true: '已报名', false: '我要参加'}, {true: '记得准时来参加哦', false: '赶快报名吧'}, false])
+    it 'should expired and disabled', ->
+      expect(scope.disabled).toBe(true)
+      expect(scope.joined).toBe('expired')
+      expect(scope.title).toBe('已过期，请继续关注下一期活动')
